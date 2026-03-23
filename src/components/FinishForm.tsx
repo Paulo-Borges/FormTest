@@ -1,5 +1,38 @@
 import { useState } from "react";
 
+const formFields = [
+  {
+    id: "1",
+    label: "Nome",
+    type: "text",
+    name: "nome",
+  },
+  {
+    id: "2",
+    label: "Email",
+    type: "email",
+    name: "email",
+  },
+  {
+    id: "3",
+    label: "Senha",
+    type: "password",
+    name: "senha",
+  },
+  {
+    id: "4",
+    label: "Cargo",
+    type: "text",
+    name: "cargo",
+  },
+  {
+    id: "5",
+    label: "Curso",
+    type: "text",
+    name: "curso",
+  },
+];
+
 export const FinishForm = () => {
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -41,57 +74,31 @@ export const FinishForm = () => {
       onSubmit={handleSubmmit}
       className="flex flex-col w-screen max-w-5xl px-4"
     >
-      <label htmlFor="nome" className="flex flex-col">
-        Nome :
-        <input
-          type="text"
-          name="nome"
-          value={formData.nome}
-          onChange={handleChange}
-          className="border"
-        />
-      </label>
-      <label htmlFor="email" className="flex flex-col">
-        Email :
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="border"
-        />
-      </label>
-      <label htmlFor="senha" className="flex flex-col">
-        Senha :
-        <input
-          type="password"
-          name="senha"
-          value={formData.senha}
-          onChange={HandlePasswordChange}
-          className="border"
-        />
-      </label>
-      <label htmlFor="cargo" className="flex flex-col">
-        Cargo :
-        <input
-          type="cargo"
-          name="cargo"
-          value={formData.cargo}
-          onChange={handleChange}
-          className="border"
-        />
-      </label>
-      <label htmlFor="curso" className="flex flex-col">
-        Curso :
-        <input
-          type="curso"
-          name="curso"
-          value={formData.curso}
-          onChange={handleChange}
-          className="border"
-        />
-      </label>
-      {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
+      <div>
+        {formFields.map((field) => (
+          <div key={field.id}>
+            <label htmlFor="nome" className="flex flex-col">
+              {field.label}
+              <input
+                type={field.type}
+                name={field.name}
+                value={formData[field.name as keyof typeof formData]}
+                onChange={
+                  field.type === "password"
+                    ? HandlePasswordChange
+                    : handleChange
+                }
+                className="border"
+              />
+            </label>
+          </div>
+        ))}
+      </div>
+      {error && (
+        <span style={{ color: "red", display: "block", fontSize: 16 }}>
+          {error}
+        </span>
+      )}
       <button>Enviar</button>
     </form>
   );
