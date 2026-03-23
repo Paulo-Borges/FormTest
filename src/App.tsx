@@ -1,3 +1,4 @@
+import { FinishForm } from "./components/FinishForm";
 import { ControlledForm } from "./components/Form";
 import { FormCerto } from "./components/FormCerto";
 import { MasForm } from "./components/MasForm";
@@ -19,6 +20,9 @@ function App() {
       </div>
       <div className=" bg-blue-950 ">
         <FormCerto />
+      </div>
+      <div className=" bg-blue-950 ">
+        <FinishForm />
       </div>
     </div>
   );
