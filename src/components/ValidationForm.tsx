@@ -6,12 +6,12 @@ export const ValidationForm = () => {
     nome: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmmit = (e) => {
+  const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Dados enviados: ", formData);
     alert(`Obrigado, ${formData.nome}`);
