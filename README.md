@@ -1,73 +1,113 @@
-# React + TypeScript + Vite
+# 📋 React Forms — Controlled Components & Validation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de estudo focado em **formulários controlados com React**, desenvolvido com Vite e TypeScript. O objetivo foi explorar diferentes abordagens para gerenciamento de estado em formulários, desde a estrutura básica até validação e boas práticas de componentização.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias
 
-## React Compiler
+- [React 18](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧠 O que foi praticado
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Controlled Components
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Todos os inputs do projeto são **componentes controlados**, ou seja, o valor de cada campo é sempre gerenciado pelo estado do React via `useState`. Isso garante que a UI esteja sempre sincronizada com os dados da aplicação — padrão fundamental no mundo React.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```tsx
+const [formData, setFormData] = useState({ nome: "", email: "" });
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setFormData({ ...formData, [name]: value });
+};
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Tipagem com TypeScript
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Todos os eventos de formulário foram tipados explicitamente:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `React.ChangeEvent<HTMLInputElement>` — para captura de mudanças nos campos
+- `React.FormEvent<HTMLFormElement>` — para o evento de submit
+
+Isso evita erros em tempo de execução e melhora muito a experiência de desenvolvimento com autocomplete e segurança de tipos.
+
+### Atualização de estado com spread operator
+
+Para atualizar apenas o campo que mudou sem perder os outros dados do formulário:
+
+```tsx
+setFormData({ ...formData, [name]: value });
+// ou usando o id do elemento como chave dinâmica:
+setFormData({ ...formData, [id]: value });
 ```
+
+### Prevenção do comportamento padrão do formulário
+
+```tsx
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault(); // impede o reload da página
+  console.log(formData);
+};
+```
+
+---
+
+## 🗂️ Componentes
+
+| Componente       | Descrição                                                                           |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| `MasForm`        | Formulário base com `nome`, `email` e `senha`. Ponto de partida do estudo.          |
+| `ControlledForm` | Versão refatorada usando `id` em vez de `name` para chave dinâmica de estado.       |
+| `ValidationForm` | Formulário com feedback ao usuário via `alert` no submit.                           |
+| `FormCerto`      | Versão mais completa com campo de `cargo`, consolidando os aprendizados anteriores. |
+
+---
+
+## 📁 Estrutura do projeto
+
+```
+src/
+├── components/
+│   ├── MasForm.tsx
+│   ├── ControlledForm.tsx
+│   ├── ValidationForm.tsx
+│   └── FormCerto.tsx
+└── App.tsx
+```
+
+---
+
+## ▶️ Como rodar
+
+```bash
+# Instalar dependências
+npm install
+
+# Iniciar o servidor de desenvolvimento
+npm run dev
+```
+
+---
+
+## 📌 Próximos passos
+
+- [ ] Adicionar validação de campos com mensagens de erro inline (sem `alert`)
+- [ ] Integrar uma biblioteca de formulários como [React Hook Form](https://react-hook-form.com/) ou [Formik](https://formik.org/)
+- [ ] Adicionar esquemas de validação com [Zod](https://zod.dev/) ou [Yup](https://github.com/jquense/yup)
+- [ ] Estilização dos formulários com Tailwind CSS
+- [ ] Testes unitários com [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/)
+
+---
+
+## 👤 Autor
+
+Feito por **[Paulo Borges de Almeida]** — estudante de Análise e Desenvolvimento de Sistemas, em busca de oportunidades de estágio ou posição júnior em desenvolvimento frontend.
+
+[![LinkedIn](https://www.linkedin.com/in/paulo-borges-de-almeida-b543b3242/)]
+[![GitHub](https://github.com/Paulo-Borges)]
