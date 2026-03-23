@@ -1,12 +1,24 @@
 import { useState } from "react";
 
 export const FormCerto = () => {
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
     senha: "",
     cargo: "",
   });
+
+  const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+    if (value.length > 0 && value.length < 6) {
+      setError("A senha tem que ter pelo menos 6 carcteres");
+    } else {
+      setError("");
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,6 +27,11 @@ export const FormCerto = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.senha.length < 6) {
+      setError("Não é possíve enviar: senha muito curta.");
+      return;
+    }
     console.log(" Graças a Deus", formData);
   };
 
@@ -23,7 +40,7 @@ export const FormCerto = () => {
       <label htmlFor="nome">
         Nome :
         <input
-          type="nome"
+          type="text"
           name="nome"
           value={formData.nome}
           onChange={handleChange}
@@ -46,7 +63,7 @@ export const FormCerto = () => {
           type="password"
           name="senha"
           value={formData.senha}
-          onChange={handleChange}
+          onChange={HandlePasswordChange}
         />
       </label>
 
@@ -59,7 +76,7 @@ export const FormCerto = () => {
           onChange={handleChange}
         />
       </label>
-
+      {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
       <button type="submit">Enviar</button>
     </form>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export function ControlledForm() {
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     nome: "",
@@ -41,6 +42,7 @@ export function ControlledForm() {
           onChange={handleChange}
         />
       </div>
+      {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
       <button type="submit" className="border">
         Enviar
       </button>

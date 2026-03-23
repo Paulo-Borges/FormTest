@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export const FinishForm = () => {
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -9,8 +10,24 @@ export const FinishForm = () => {
     curso: "",
   });
 
+  const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+    if (value.length > 0 && value.length < 6) {
+      setError("A senha tem que ter pelo menos 6 caracteres.");
+    } else {
+      setError("");
+    }
+  };
+
   const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.senha.length < 6) {
+      setError("Não é possíve enviar: senha muito curta.");
+      return;
+    }
     console.log("Agora eu sei", formData);
   };
 
@@ -24,7 +41,7 @@ export const FinishForm = () => {
       <label htmlFor="nome">
         Nome :
         <input
-          type="nome"
+          type="text"
           name="nome"
           value={formData.nome}
           onChange={handleChange}
@@ -42,10 +59,10 @@ export const FinishForm = () => {
       <label htmlFor="senha">
         Senha :
         <input
-          type="senha"
+          type="password"
           name="senha"
           value={formData.senha}
-          onChange={handleChange}
+          onChange={HandlePasswordChange}
         />
       </label>
       <label htmlFor="cargo">
@@ -66,7 +83,7 @@ export const FinishForm = () => {
           onChange={handleChange}
         />
       </label>
-
+      {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
       <button>Enviar</button>
     </form>
   );
