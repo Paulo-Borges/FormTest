@@ -37,8 +37,11 @@ export const MasForm = () => {
   };
 
   return (
-    <form onSubmit={HandleSubmit}>
-      <label htmlFor="nome">
+    <form
+      onSubmit={HandleSubmit}
+      className="flex flex-col w-screen max-w-5xl px-4"
+    >
+      <label htmlFor="nome" className="flex flex-col">
         Nome:
         <input
           type="text"
@@ -49,7 +52,7 @@ export const MasForm = () => {
         />
       </label>
 
-      <label htmlFor="email">
+      <label htmlFor="email" className="flex flex-col">
         Email :
         <input
           type="email"
@@ -60,7 +63,7 @@ export const MasForm = () => {
         />
       </label>
 
-      <label htmlFor="senha">
+      <label htmlFor="senha" className="flex flex-col">
         Senha :
         <input
           type="password"

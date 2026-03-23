@@ -36,44 +36,51 @@ export const FormCerto = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="nome">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 w-screen max-w-5xl px-4"
+    >
+      <label htmlFor="nome" className="flex flex-col">
         Nome :
         <input
           type="text"
           name="nome"
           value={formData.nome}
           onChange={handleChange}
+          className="border"
         />
       </label>
 
-      <label htmlFor="email">
+      <label htmlFor="email" className="flex flex-col">
         Email :
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
+          className="border"
         />
       </label>
 
-      <label htmlFor="senha">
+      <label htmlFor="senha" className="flex flex-col">
         Senha :
         <input
           type="password"
           name="senha"
           value={formData.senha}
           onChange={HandlePasswordChange}
+          className="border"
         />
       </label>
 
-      <label htmlFor="cargo">
+      <label htmlFor="cargo" className="flex flex-col">
         Cargo :
         <input
           type="cargo"
           name="cargo"
           value={formData.cargo}
           onChange={handleChange}
+          className="border"
         />
       </label>
       {error && <span style={{ color: "red", display: "block" }}>{error}</span>}

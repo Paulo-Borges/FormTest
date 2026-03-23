@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export function ControlledForm() {
-  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     nome: "",
@@ -19,7 +18,10 @@ export function ControlledForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-5 w-screen max-w-5xl px-4"
+    >
       <div className="flex flex-col">
         <label htmlFor="email">Email:</label>
         <input
@@ -42,8 +44,7 @@ export function ControlledForm() {
           onChange={handleChange}
         />
       </div>
-      {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
-      <button type="submit" className="border">
+      <button type="submit" className="">
         Enviar
       </button>
     </form>

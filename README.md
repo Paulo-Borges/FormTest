@@ -97,7 +97,7 @@ npm run dev
 
 ## 📌 Próximos passos
 
-- [ ] Adicionar validação de campos com mensagens de erro inline (sem `alert`)
+- [x ] Adicionar validação de campos com mensagens de erro inline (sem `alert`)
 - [ ] Integrar uma biblioteca de formulários como [React Hook Form](https://react-hook-form.com/) ou [Formik](https://formik.org/)
 - [ ] Adicionar esquemas de validação com [Zod](https://zod.dev/) ou [Yup](https://github.com/jquense/yup)
 - [ ] Estilização dos formulários com Tailwind CSS

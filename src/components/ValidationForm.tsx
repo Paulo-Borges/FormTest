@@ -18,10 +18,13 @@ export const ValidationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmmit} className="">
+    <form
+      onSubmit={handleSubmmit}
+      className="flex flex-col gap-4 w-screen max-w-5xl px-4"
+    >
       <div>
-        <label htmlFor="nome">
-          Nome:
+        <label htmlFor="nome" className="flex flex-col">
+          Nome :
           <input
             type="nome"
             name="nome"
@@ -32,8 +35,8 @@ export const ValidationForm = () => {
         </label>
       </div>
       <div>
-        <label htmlFor="email">
-          Email:
+        <label htmlFor="email" className="flex flex-col">
+          Email :
           <input
             type="email"
             name="email"
