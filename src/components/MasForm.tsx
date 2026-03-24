@@ -2,12 +2,32 @@ import React, { useState } from "react";
 
 export const MasForm = () => {
   const [error, setError] = useState("");
-
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
     senha: "",
   });
+
+  const fieldsForm = [
+    {
+      label: "Nome",
+      name: "nome",
+      type: "text",
+      placeholder: "Digite seu nome",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+      placeholder: "Digite seu Email",
+    },
+    {
+      label: "Senha",
+      name: "senha",
+      type: "password",
+      placeholder: "Digite sua senha",
+    },
+  ];
 
   const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,38 +61,23 @@ export const MasForm = () => {
       onSubmit={HandleSubmit}
       className="flex flex-col w-screen max-w-5xl px-4"
     >
-      <label htmlFor="nome" className="flex flex-col">
-        Nome:
-        <input
-          type="text"
-          name="nome"
-          value={formData.nome}
-          placeholder="Digite o seu Nome"
-          onChange={HandleChange}
-        />
-      </label>
+      {fieldsForm.map((field) => (
+        <div key={field.label}>
+          <label htmlFor="nome" className="flex flex-col">
+            {field.label}
+            <input
+              type={field.type}
+              name={field.name}
+              value={formData[field.name as keyof typeof formData]}
+              placeholder={field.placeholder}
+              onChange={
+                field.type === "password" ? HandlePasswordChange : HandleChange
+              }
+            />
+          </label>
+        </div>
+      ))}
 
-      <label htmlFor="email" className="flex flex-col">
-        Email :
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          placeholder="Digite o seu Email"
-          onChange={HandleChange}
-        />
-      </label>
-
-      <label htmlFor="senha" className="flex flex-col">
-        Senha :
-        <input
-          type="password"
-          name="senha"
-          value={formData.senha}
-          placeholder="Digite o seu senha"
-          onChange={HandlePasswordChange}
-        />
-      </label>
       {error && <span style={{ color: "red", display: "block" }}>{error}</span>}
       <button>Enviar</button>
     </form>
