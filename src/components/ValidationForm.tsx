@@ -6,6 +6,21 @@ export const ValidationForm = () => {
     nome: "",
   });
 
+  const formFields = [
+    {
+      label: "Nome :",
+      type: "text",
+      name: "nome",
+      placeholder: "Digite o seu nome",
+    },
+    {
+      label: "Email :",
+      type: "email",
+      name: "email",
+      placeholder: "Digite o seu email",
+    },
+  ];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -14,7 +29,6 @@ export const ValidationForm = () => {
   const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Dados enviados: ", formData);
-    alert(`Obrigado, ${formData.nome}`);
   };
 
   return (
@@ -22,30 +36,21 @@ export const ValidationForm = () => {
       onSubmit={handleSubmmit}
       className="flex flex-col gap-4 w-screen max-w-5xl px-4"
     >
-      <div>
-        <label htmlFor="nome" className="flex flex-col">
-          Nome :
-          <input
-            type="nome"
-            name="nome"
-            value={formData.nome}
-            onChange={handleChange}
-            placeholder="Digite o seu nome"
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="email" className="flex flex-col">
-          Email :
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Digite o seu email"
-          />
-        </label>
-      </div>
+      {formFields.map((field) => (
+        <div key={field.name}>
+          <label htmlFor={field.name} className="flex flex-col">
+            {field.label}
+            <input
+              type={field.type}
+              name={field.name}
+              value={formData[field.name as keyof typeof formData]}
+              onChange={handleChange}
+              placeholder="Digite o seu nome"
+            />
+          </label>
+        </div>
+      ))}
+
       <button type="submit">Enviar</button>
     </form>
   );
