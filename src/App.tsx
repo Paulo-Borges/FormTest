@@ -1,6 +1,7 @@
 import { FinishForm } from "./components/FinishForm";
 import { ControlledForm } from "./components/Form";
 import { FormCerto } from "./components/FormCerto";
+import { Formulario } from "./components/Formulario";
 import { MasForm } from "./components/MasForm";
 import { ValidationForm } from "./components/ValidationForm";
 
@@ -23,6 +24,9 @@ function App() {
       </div>
       <div className=" bg-blue-950 ">
         <FinishForm />
+      </div>
+      <div className=" bg-gray-500">
+        <Formulario />
       </div>
     </div>
   );
