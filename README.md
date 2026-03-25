@@ -1,6 +1,27 @@
 # 📋 React Forms — Controlled Components & Validation
 
-Projeto de estudo focado em **formulários controlados com React**, desenvolvido com Vite e TypeScript. O objetivo foi explorar diferentes abordagens para gerenciamento de estado em formulários, desde a estrutura básica até validação e boas práticas de componentização.
+## Projeto de estudo focado em **formulários controlados com React**, desenvolvido com Vite e TypeScript. O objetivo foi explorar diferentes abordagens para gerenciamento de estado em formulários, desde a estrutura básica até validação e boas práticas de componentização.
+
+## 📌 Progresso
+
+- [x ] Adicionar validação de campos com mensagens de erro inline
+- [x ] Componentes controlados com useState
+- [x ] Tipagem explícita de eventos com TypeScript
+- [x ] Interface FormData com keyof para acesso seguro ao estado
+- [x ] Geração dinâmica de campos a partir de array de configuração
+- [x ] Validação em tempo real da senha (mínimo 6 caracteres)
+- [x ] Bloqueio de submit com senha inválida
+- [x ] Mensagens de erro inline (sem `alert`)
+- [x ] Handlers diferenciados por tipo de campo (password vs demais)
+
+---
+
+## 📌 Próximos passos
+
+- [ ] Integrar uma biblioteca de formulários como [React Hook Form](https://react-hook-form.com/) ou [Formik](https://formik.org/)
+- [ ] Adicionar esquemas de validação com [Zod](https://zod.dev/) ou [Yup](https://github.com/jquense/yup)
+- [ ] Estilização completa dos formulários com Tailwind CSS
+- [ ] Testes unitários com [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/)
 
 ---
 
@@ -56,18 +77,25 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 };
 ```
 
----
+### Validação inline com mensagens de erro
 
-## 🗂️ Componentes
+```tsx
+ A validação agora acontece em tempo real, sem uso de alert(). Mensagens de erro são exibidas diretamente abaixo do formulário via estado:
+ Além da validação em tempo real, o submit também bloqueia o envio se a senha for inválida:
+```
 
-| Componente       | Descrição                                                                           |
-| ---------------- | ----------------------------------------------------------------------------------- |
-| `MasForm`        | Formulário base com `nome`, `email` e `senha`. Ponto de partida do estudo.          |
-| `ControlledForm` | Versão refatorada usando `id` em vez de `name` para chave dinâmica de estado.       |
-| `ValidationForm` | Formulário com feedback ao usuário via `alert` no submit.                           |
-| `FormCerto`      | Versão mais completa com campo de `cargo`, consolidando os aprendizados anteriores. |
+```tsx
+ Handlers diferenciados por tipo de campo
+Campos de senha recebem um handler dedicado (HandlePasswordChange) que dispara a validação a cada keystroke, enquanto os demais campos usam o handleChange genérico. A seleção é feita diretamente no array de configuração:
 
----
+onChange={field.type === "password" ? HandlePasswordChange : handleChange}
+```
+
+### Formulários gerados a partir de arrays de configuração
+
+```tsx
+Em vez de repetir JSX para cada campo, todos os componentes usam um array declarativo de objetos para gerar os inputs dinamicamente:
+```
 
 ## 📁 Estrutura do projeto
 
@@ -75,10 +103,13 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 src/
 ├── components/
 │   ├── MasForm.tsx
-│   ├── ControlledForm.tsx
+│   ├── Form.tsx           (ControlledForm)
 │   ├── ValidationForm.tsx
-│   └── FormCerto.tsx
+│   ├── FormCerto.tsx
+│   ├── FinishForm.tsx
+│   └── Formulario.tsx
 └── App.tsx
+
 ```
 
 ---
@@ -95,19 +126,10 @@ npm run dev
 
 ---
 
-## 📌 Próximos passos
-
-- [x ] Adicionar validação de campos com mensagens de erro inline (sem `alert`)
-- [ ] Integrar uma biblioteca de formulários como [React Hook Form](https://react-hook-form.com/) ou [Formik](https://formik.org/)
-- [ ] Adicionar esquemas de validação com [Zod](https://zod.dev/) ou [Yup](https://github.com/jquense/yup)
-- [ ] Estilização dos formulários com Tailwind CSS
-- [ ] Testes unitários com [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/)
-
----
-
 ## 👤 Autor
 
 Feito por **[Paulo Borges de Almeida]** — estudante de Análise e Desenvolvimento de Sistemas, em busca de oportunidades de estágio ou posição júnior em desenvolvimento frontend.
 
-[![LinkedIn](https://www.linkedin.com/in/paulo-borges-de-almeida-b543b3242/)]
-[![GitHub](https://github.com/Paulo-Borges)]
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Paulo%20Borges-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/paulo-borges-de-almeida-b543b3242/)
+
+[![GitHub](https://img.shields.io/badge/GitHub-Paulo--Borges-181717?style=flat&logo=github)](https://github.com/Paulo-Borges)
