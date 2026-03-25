@@ -4,15 +4,18 @@
 
 ## 📌 Progresso
 
-- [x ] Adicionar validação de campos com mensagens de erro inline
-- [x ] Componentes controlados com useState
-- [x ] Tipagem explícita de eventos com TypeScript
-- [x ] Interface FormData com keyof para acesso seguro ao estado
-- [x ] Geração dinâmica de campos a partir de array de configuração
-- [x ] Validação em tempo real da senha (mínimo 6 caracteres)
-- [x ] Bloqueio de submit com senha inválida
-- [x ] Mensagens de erro inline (sem `alert`)
-- [x ] Handlers diferenciados por tipo de campo (password vs demais)
+- [x] Adicionar validação de campos com mensagens de erro inline
+- [x] Gestão de Versão com Git: Utilização de branches para
+      desenvolvimento de funcionalidades específicas e integração
+      posterior via merge na branch main.
+- [x] Componentes controlados com useState
+- [x] Tipagem explícita de eventos com TypeScript
+- [x] Interface FormData com keyof para acesso seguro ao estado
+- [x] Geração dinâmica de campos a partir de array de configuração
+- [x] Validação em tempo real da senha (mínimo 6 caracteres)
+- [x] Bloqueio de submit com senha inválida
+- [x] Mensagens de erro inline (sem `alert`)
+- [x] Handlers diferenciados por tipo de campo (password vs demais)
 
 ---
 
@@ -31,6 +34,8 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [ Git ](https://git-scm.com/install/)
+- [ Github ](https://github.com/)
 
 ---
 
