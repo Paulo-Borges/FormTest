@@ -1,95 +1,77 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  nome: string;
+  email: string;
+  senha: string;
+  cargo: string;
+};
+
+const FormFields = [
+  {
+    label: "Nome",
+    type: "text",
+    name: "nome" as const,
+  },
+  {
+    label: "Email",
+    type: "email",
+    name: "email" as const,
+  },
+  {
+    label: "Senha",
+    type: "password",
+    name: "senha" as const,
+  },
+  {
+    label: "Cargo",
+    type: "text",
+    name: "cargo" as const,
+  },
+];
 
 export const FormCerto = () => {
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    cargo: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const FormFields = [
-    {
-      label: "Nome",
-      type: "text",
-      name: "nome",
-    },
-    {
-      label: "Email",
-      type: "email",
-      name: "email",
-    },
-    {
-      label: "Senha",
-      type: "password",
-      name: "senha",
-    },
-    {
-      label: "Cargo",
-      type: "text",
-      name: "cargo",
-    },
-  ];
-
-  const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData({ ...formData, [name]: value });
-    if (value.length > 0 && value.length < 6) {
-      setError("A senha tem que ter pelo menos 6 carcteres");
-    } else {
-      setError("");
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (formData.senha.length < 6) {
-      setError("Não é possíve enviar: senha muito curta.");
-      return;
-    }
-    console.log(" Graças a Deus", formData);
+  const onSubmit = (data: FormData) => {
+    console.log("Melhorando os hooks", data);
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 w-screen max-w-5xl px-4"
     >
       <div>
         {FormFields.map((field) => (
           <div key={field.name}>
-            <label htmlFor={field.name} className="flex flex-col">
+            <label className="flex flex-col">
               {field.label}
               <input
                 type={field.type}
-                name={field.name}
-                value={formData[field.name as keyof typeof formData]}
-                onChange={
-                  field.type === "password"
-                    ? HandlePasswordChange
-                    : handleChange
-                }
                 className="border"
+                {...register(field.name, {
+                  required: `${field.label} precisar ter os dados!`,
+                  ...(field.name === "senha" && {
+                    minLength: {
+                      value: 6,
+                      message: "A senha tem que ter pelo menos 6 caracteres",
+                    },
+                  }),
+                })}
               />
             </label>
+            {errors[field.name] && <span>{errors[field.name]?.message}</span>}
           </div>
         ))}
       </div>
 
-      {error && (
-        <span style={{ color: "red", display: "block", fontSize: "16" }}>
-          {error}
-        </span>
-      )}
-      <button type="submit">Enviar</button>
+      <button>Enviar</button>
     </form>
   );
 };
