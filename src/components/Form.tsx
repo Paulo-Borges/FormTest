@@ -36,8 +36,8 @@ export function ControlledForm() {
     >
       <div className="flex flex-col gap-4">
         {formFields.map((field) => (
-          <div key={field.name} className="flex flex-col gap-4">
-            <label>
+          <div key={field.name}>
+            <label className="flex flex-col gap-4">
               {field.label}
               <input
                 type={field.type}
@@ -47,7 +47,11 @@ export function ControlledForm() {
                 })}
               />
             </label>
-            {errors[field.name] && <span>{errors[field.name]?.message}</span>}
+            {errors[field.name] && (
+              <span className="text-red-600 text-lg font-medium">
+                {errors[field.name]?.message}
+              </span>
+            )}
           </div>
         ))}
       </div>

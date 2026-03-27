@@ -14,16 +14,16 @@ function App() {
       <div className=" bg-gray-500 ">
         <ControlledForm />
       </div>
-      <div className=" bg-gray-500">
+      <div className="bg-blue-950 flex">
         <FormCerto />
       </div>
-      <div className=" bg-gray-500">
+      <div className="bg-gray-500 ">
         <Formulario />
       </div>
-      <div className=" bg-blue-950 ">
+      <div className=" bg-blue-950 flex">
         <MasForm />
       </div>
-      <div className=" bg-blue-950 flex">
+      <div className=" bg-gray-500 ">
         <ValidationForm />
       </div>
     </div>
