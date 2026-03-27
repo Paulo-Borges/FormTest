@@ -1,68 +1,58 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface FormData {
   email: string;
   nome: string;
 }
 
-const formFields: {
-  label: string;
-  name: keyof FormData;
-  type: string;
-}[] = [
+const formFields = [
   {
     label: "Email",
-    name: "email",
+    name: "email" as const,
     type: "email",
   },
   {
     label: "Nome",
-    name: "nome",
+    name: "nome" as const,
     type: "text",
   },
 ];
 
 export function ControlledForm() {
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    nome: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    // Atualiza apenas o campo que mudou, mantendo os outros
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Enviado:", formData);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+  const onSubmit = (data: FormData) => {
+    console.log("Melhorando o Hook", data);
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 w-screen max-w-5xl px-4"
     >
       <div className="flex flex-col gap-4">
         {formFields.map((field) => (
           <div key={field.name} className="flex flex-col gap-4">
-            <label htmlFor={field.label}>{field.label}</label>
-            <input
-              name={field.name}
-              type={field.type}
-              value={formData[field.name]}
-              className="border"
-              //   onChange={(e) => setFormData {}
-              onChange={handleChange}
-            />
+            <label>
+              {field.label}
+              <input
+                type={field.type}
+                className="border"
+                {...register(field.name, {
+                  required: `${field.label} é obrigatório`,
+                })}
+              />
+            </label>
+            {errors[field.name] && <span>{errors[field.name]?.message}</span>}
           </div>
         ))}
       </div>
 
-      <button type="submit" className="">
-        Enviar
-      </button>
+      <button>Enviar</button>
     </form>
   );
 }
