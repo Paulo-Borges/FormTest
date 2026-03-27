@@ -1,83 +1,122 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+type FormData = {
+  nome: string;
+  email: string;
+  senha: string;
+  cargo: string;
+  curso: string;
+};
 
 const formFields = [
   {
     id: "1",
     label: "Nome",
     type: "text",
-    name: "nome",
+    name: "nome" as const,
   },
   {
     id: "2",
     label: "Email",
     type: "email",
-    name: "email",
+    name: "email" as const,
   },
   {
     id: "3",
     label: "Senha",
     type: "password",
-    name: "senha",
+    name: "senha" as const,
   },
   {
     id: "4",
     label: "Cargo",
     type: "text",
-    name: "cargo",
+    name: "cargo" as const,
   },
   {
     id: "5",
     label: "Curso",
     type: "text",
-    name: "curso",
+    name: "curso" as const,
   },
 ];
 
 export const FinishForm = () => {
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    cargo: "",
-    curso: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData({ ...formData, [name]: value });
-    if (value.length > 0 && value.length < 6) {
-      setError("A senha tem que ter pelo menos 6 caracteres.");
-    } else {
-      setError("");
-    }
+  const onSubmit = (data: FormData) => {
+    console.log("Agora com Hook-Form", data);
   };
+  // const [error, setError] = useState("");
+  // const [formData, setFormData] = useState({
+  //   nome: "",
+  //   email: "",
+  //   senha: "",
+  //   cargo: "",
+  //   curso: "",
+  // });
 
-  const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const HandlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
 
-    if (formData.senha.length < 6) {
-      setError("Não é possíve enviar: senha muito curta.");
-      return;
-    }
-    console.log("Agora eu sei", formData);
-  };
+  //   setFormData({ ...formData, [name]: value });
+  //   if (value.length > 0 && value.length < 6) {
+  //     setError("A senha tem que ter pelo menos 6 caracteres.");
+  //   } else {
+  //     setError("");
+  //   }
+  // };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleSubmmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   if (formData.senha.length < 6) {
+  //     setError("Não é possíve enviar: senha muito curta.");
+  //     return;
+  //   }
+  //   console.log("Agora eu sei", formData);
+  // };
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
 
   return (
     <form
-      onSubmit={handleSubmmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col w-screen max-w-5xl px-4"
     >
       <div>
         {formFields.map((field) => (
           <div key={field.id}>
-            <label htmlFor="nome" className="flex flex-col">
+            <label className="flex flex-col">
+              {field.label}
+              <input
+                type={field.type}
+                className="border"
+                {...register(field.name, {
+                  required: `${field.label} é obrigatório`,
+                  ...(field.name === "senha" && {
+                    minLength: {
+                      value: 6,
+                      message: "A Senha tem que ter pelo menos 6 caracteres.",
+                    },
+                  }),
+                })}
+              />
+            </label>
+            {errors[field.name] && (
+              <span style={{ color: "red", fontSize: 16 }}>
+                {errors[field.name]?.message}
+              </span>
+            )}
+            {/* <label htmlFor="nome" className="flex flex-col">
               {field.label}
               <input
                 type={field.type}
@@ -90,15 +129,15 @@ export const FinishForm = () => {
                 }
                 className="border"
               />
-            </label>
+            </label> */}
           </div>
         ))}
       </div>
-      {error && (
+      {/* {error && (
         <span style={{ color: "red", display: "block", fontSize: 16 }}>
           {error}
         </span>
-      )}
+      )} */}
       <button>Enviar</button>
     </form>
   );
